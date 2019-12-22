@@ -1,0 +1,16 @@
+pipeline {
+    agent {
+        
+    
+            label 'nginx'
+    }
+    stages {
+        stage('Test') {
+            steps {
+                
+                sh 'docker run --publish 80:80 --detach nginx:alpine' 
+            }
+        }
+    }
+    
+}
