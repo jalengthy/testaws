@@ -1,0 +1,26 @@
+def st='good'
+
+node ('nginx') { 
+    stage('Example') {
+        
+        try {
+            sh 'docker exec  dockernginx  ps -ef | grep nginx'
+        }
+        catch (err) {
+            st = 'bad'
+        }
+    }
+        if ( st == 'bad')
+        {
+            stage('badf') {
+               
+            try {
+                
+                sh 'docker start dockernginx'
+            }
+            catch (err) {
+            sh  'docker run --name dockernginx --publish 80:80 --detach nginx:alpine'
+            }
+            }
+        }
+}
